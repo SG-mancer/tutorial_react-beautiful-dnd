@@ -123,7 +123,10 @@
       import styled from 'styled-components';
 
       const Container = styled.div`
-        padding: 2px;`;
+        border: 1px solid lightgrey;
+        border-radius: 2px;
+        padding: 8px;
+        margin-bottom: 8px`;
 
       export default class Task extends React.Component {
         render () {
@@ -131,4 +134,71 @@
         }
       }
       ```
-    * 
+### 17.  add **react-beautiful-dnd** as a dependency
+  >yarn add react-beautiful-dnd
+
+18. wrap the column in a `drag-drop context`
+-
+    * add the following line to */src/index.js*
+      ```js
+      import { DragDropContext } from 'react-beautiful-dnd';
+      ```
+    * inside the **render() {}** wrap the **return** function with DragDropContext tags
+      ```js
+      <DragDropContext> return ... \</DragDropContext>
+      ```
+    * inside the DragDropContext you need to add the **callback** *onDragEnd*. There are also two other callbacks:
+       * onDragStart 
+       * onDragUpdate
+       ```js
+       <DragDropContext onDragEnd={this.onDragEnd}>
+       ```
+    * it is our onDragEnd function to synchronously update the state
+      * add the following just after **state = initialData**:
+        ```js
+        onDragEnd = result =>{
+          // TODO:
+        }
+        ```
+-
+    * add the following Droppable functionality to */src/column.jsx* :
+       * import Droppable in the import section at top of file:
+       ```js
+       import { Droppable } from 'react-beautiful-dnd';
+       ```
+       * wrap TaskList component inside of the dropable
+       ```js
+       <Droppable droppableId={this.props.column.id}>
+          {() => (
+           <TaskList>
+              ...
+            </TaskList>
+          )}
+       </Droppable>
+       ```
+        * NOTE: Droppable has a **mandatory prop** dropableId !
+        * dropableId also needs to be unique...
+        * it also expects a child that returns a [React component](https://reactjs.org/docs/react-component.html) so we needed to use **{() => (...)}** around our \<TaskList> tags.
+
+19. Setup our Droppable component
+    * in */src/column.jsx* change the context between Droppable Tags to
+    ```js
+    {provided => (
+      <TaskList
+        innerRef={provided.innerRef}
+        {...provided.droppableProps}
+      >
+        {this.props.tasks.map(task => <Task key={task.id} task={task} />)}
+        {provided.placeholder}
+      </TaskList>
+    )}
+    ```
+20. Setup the Draggable component in */src/task.jsx*
+    * import Draggable
+    * wrap rendered component inside a Draggable tag
+    * update the two required props **draggableId** and **index**
+    * GO BACK TO column component to pass and index
+    * it also expects the child to be a function (this function again has provided as a prop)
+      * add the properties **{...provided.draggableProps}**, **{...provided.dragHandleProps}** and **innerRef={provided.innerRef}** to the Container
+
+21. HMM currently I can not CLICK any of the TaskItems
