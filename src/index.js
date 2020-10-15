@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import '@atlaskit/css-reset';
 import { DragDropContext } from 'react-beautiful-dnd';
 import initialData from './initial-data';
-import Column from './column';
+import Column from './testcolumn';
 
 class App extends React.Component {
   state = initialData;

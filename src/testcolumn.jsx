@@ -1,16 +1,20 @@
+//From @eggheadio-projects https://github.com/eggheadio-projects/Beautiful-and-Accessible-Drag-and-Drop-with-react-beautiful-dnd-notes/blob/master/04-react-reorder-a-list-with-react-beautiful-dnd.md
 import React from 'react';
 import styled from 'styled-components';
 import { Droppable } from 'react-beautiful-dnd';
-import Task from './task';
+import Task from './testtask';
 
 const Container = styled.div`
   margin: 8px;
-  border: 2px solid lightgrey;
-  border-radius: 4px;`;
+  border: 1px solid lightgrey;
+  border-radius: 2px;
+`;
 const Title = styled.h3`
-  padding: 8px;`;
+  padding: 8px;
+`;
 const TaskList = styled.div`
-  padding: 8px;`;
+  padding: 8px;
+`;
 
 export default class Column extends React.Component {
   render() {
@@ -18,19 +22,19 @@ export default class Column extends React.Component {
       <Container>
         <Title>{this.props.column.title}</Title>
         <Droppable droppableId={this.props.column.id}>
-          {(provided) => (
+          {provided => 
             <TaskList
-              innerRef={provided.innerRef}
+              ref={provided.innerRef}
               {...provided.droppableProps}
             >
               {this.props.tasks.map((task, index) => (
-                <Task key={task.id} task={task} index={index}/>
+                <Task key={task.id} task={task} index={index} />
               ))}
               {provided.placeholder}
             </TaskList>
-          )}
+          }
         </Droppable>
       </Container>
-    );  
+    );
   }
 }
