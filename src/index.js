@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import '@atlaskit/css-reset';
 import { DragDropContext } from 'react-beautiful-dnd';
 import initialData from './initial-data';
-import Column from './testcolumn';
+import Column from './column';
 
 class App extends React.Component {
   state = initialData;
@@ -44,7 +44,6 @@ class App extends React.Component {
   };
 
   render() {
-      
       return (
         <DragDropContext onDragEnd={this.onDragEnd}> 
           {this.state.columnOrder.map(columnId =>{
@@ -59,8 +58,9 @@ class App extends React.Component {
 } 
 
 ReactDOM.render(
-  //<React.StrictMode>
-    <App />,
-  //</React.StrictMode>,
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  
   document.getElementById('root')
 );
