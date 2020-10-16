@@ -201,4 +201,92 @@
     * it also expects the child to be a function (this function again has provided as a prop)
       * add the properties **{...provided.draggableProps}**, **{...provided.dragHandleProps}** and **innerRef={provided.innerRef}** to the Container
 
-21. HMM currently I can not CLICK any of the TaskItems
+21. update the **innerRef=...** to **ref=...** in **TaskList** tag.
+    * see [error report](https://github.com/SG-mancer/tutorial_react-beautiful-dnd/issues/1)
+22. provide the **onTaskEnd** method in App function (*/src/index.js*):
+
+```js
+onDragEnd = result =>{
+    const {destination, source, draggableId} = result;
+
+    if (!destination) {
+      return;
+    }
+
+    if (
+      destination.droppableId === source.droppableId &&
+      destination.index === source.index
+    ) {
+      return;
+    }
+
+    
+    const column = this.state.columns[source.droppableId];
+    const newTaskIds = Array.from(column.taskIds);
+    newTaskIds.splice(source.index, 1);
+    newTaskIds.splice(destination.index, 0, draggableId);
+        
+    const newColumn = {
+      ...column,
+      taskIds: newTaskIds,
+    };
+    
+
+    const newState = {
+      ...this.state,
+      columns: {
+        ...this.state.column,
+        [newColumn.id]: newColumn,
+      },
+    };
+
+    this.setState(newState);
+  };
+
+  render() {
+      return (
+        <DragDropContext onDragEnd={this.onDragEnd}> 
+          {this.state.columnOrder.map(columnId =>{
+            const column = this.state.columns[columnId];
+            const tasks = column.taskIds.map(taskId => this.state.tasks[taskId]);
+
+            return <Column key={column.id} column={column} tasks={tasks} />;
+          })}
+        </DragDropContext>
+      );
+  }
+} 
+```
+
+This will allow the movement to be saved.
+   * allowing persistance caused an error
+   * NOTE: I had an issue because in the initial-data.js there was an error in my lables not matching the taskIds
+   * see error report: [issue2](https://github.com/SG-mancer/tutorial_react-beautiful-dnd/issues/2)
+
+
+23. Adding some aesethical things
+    * isDragging (for dragables)
+    * isDraggingOver (for dropables)
+
+       * add to the dropable **,snapshot** after **provided**
+       * add **isDraggingOver={snapshot.isDraggingOver}**
+         or **isDragging={snapshot.isDragging}** in the Dragable or Dropable tag. ie:   
+         ```js
+         <Droppable droppableId={this.props.column.id}>
+           {(provided, snapshot) => (
+           <TaskList
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              isDraggingOver={snapshot.isDraggingOver}
+            >
+          ...
+         ```
+        * add a conditional formatting for the tag. ie:
+        ```js
+        const TaskList = styled.div`
+          background-color: ${props => (props.isDraggingOver ? 'red' : 'yellow')}`;
+        ```
+        and similar for isDragging...
+24. SKIP TO LESSON 9
+25. update the */src/initial-data.js* to include multiple columns and order of columns data.
+26. 
