@@ -46,7 +46,7 @@ class App extends React.Component {
       const newState = {
         ...this.state,
         columns: {
-          ...this.state.column,
+          ...this.state.columns,
           [newColumn.id]: newColumn,
         },
       };
@@ -55,31 +55,31 @@ class App extends React.Component {
       return;
     }
   
-  // Moving from one list to another
-  const startTaskIds = Array.from(start.taskIds);
-  startTaskIds.splice(source.index, 1);
-  const newStart = {
-    ...start,
-    taskIds: startTaskIds,
-  };
+    // Moving from one list to another
+    const startTaskIds = Array.from(start.taskIds);
+    startTaskIds.splice(source.index, 1);
+    const newStart = {
+      ...start,
+      taskIds: startTaskIds,
+    };
 
-  const finishTaskIds = Array.from(finish.taskIds);
-  finishTaskIds.splice(destination.index, 0, draggableId);
-  const newFinish = {
-    ...finish,
-    taskIds: finishTaskIds,
-  };
+    const finishTaskIds = Array.from(finish.taskIds);
+    finishTaskIds.splice(destination.index, 0, draggableId);
+    const newFinish = {
+      ...finish,
+      taskIds: finishTaskIds,
+    };
 
-  const newState = {
-    ...this.state,
-    columns: {
-      ...this.state.columns,
-      [newStart.id]: newStart,
-      [newFinish.id]: newFinish,
-    },
+    const newState = {
+      ...this.state,
+      columns: {
+        ...this.state.columns,
+        [newStart.id]: newStart,
+        [newFinish.id]: newFinish,
+      },
+    };
+    this.setState(newState);
   };
-  this.setState(newState);
-};
 
   render() {
       return (
