@@ -13,6 +13,29 @@ const Container = styled.div`
 class App extends React.Component {
   state = initialData;
 
+  addItem = () => {
+    //handle adding a new item
+    // follow points from https://medium.com/js-geek/create-a-simple-todo-app-in-react-72d9341a7e6c to learn how to add items
+
+    const newTasks = this.state.tasks;
+    console.log(newTasks)
+    //const newTask = {'task-5': {id: 'task-5', content: 'TEST'}};
+    //newTasks.splice(newTask, 1);
+
+    //console.log(newTasks)
+
+
+
+
+    const newState = {
+      ...this.state,
+      tasks: newTasks,
+    };
+    this.setState(newState);
+
+  }
+
+  //Moving Items
   onDragEnd = result =>{
     const {destination, source, draggableId} = result;
 
@@ -92,6 +115,11 @@ class App extends React.Component {
             return <Column key={column.id} column={column} tasks={tasks} />;
           })}
           </Container>
+
+          <form onSubmit={this.addItem}>
+            <input placeholder="Task" />
+            <button type="submit"> Add Task </button>
+          </form>
         </DragDropContext>
       );
   }
