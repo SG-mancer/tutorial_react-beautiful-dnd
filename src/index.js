@@ -13,23 +13,35 @@ const Container = styled.div`
 class App extends React.Component {
   state = initialData;
 
-  addItem = () => {
+  addItem = e => {
+    //apparently submit forces a page reload, so we need to stop that
+    e.preventDefault()
     //handle adding a new item
     // follow points from https://medium.com/js-geek/create-a-simple-todo-app-in-react-72d9341a7e6c to learn how to add items
 
+    //create a new list of tasks to add new task to
     const newTasks = this.state.tasks;
-    const newTask = {id: 'task-5', content: 'TEST'};
-    newTasks['task-5'] = newTask;
+    //generate the new task's key (ie. task-15)
+    const newTaskNo = this.state.taskCount + 1;
+    const newTaskKey = 'task-'+newTaskNo;
 
+    //create the new task object and append it to the list of tasks
+    const newTask = {id: newTaskKey, content: this.state.pendingTask};
+    newTasks[newTaskKey] = newTask;
+
+    //get a copy of the first column and add the task to the column (TaskIds)
     const column = this.state.columns["column-1"];
     const newTaskIds = Array.from(column.taskIds);
-    newTaskIds.splice(newTask.index, 0, 'task-5');
+    newTaskIds.splice(newTask.index, 0, newTaskKey);
 
+    //generate the column object
     const newColumn = {
       ...column,
       taskIds: newTaskIds,
     };
 
+    //build the state we want to replace current state with
+    //add task, add task to list in column-1, increment the number of tasks
     const newState = {
       ...this.state,
       tasks: newTasks,
@@ -37,10 +49,10 @@ class App extends React.Component {
         ...this.state.columns,
         "column-1": newColumn,
       },
+      taskCount: newTaskNo,
     };
     
     this.setState(newState);
-    alert("error here - it seems to work until I click ok, then reverts back");
     return;
   }
 
@@ -65,7 +77,7 @@ class App extends React.Component {
     if (start === finish) {
       const column = start;
       const newTaskIds = Array.from(column.taskIds);
-      //newTaskIds.splice(source.index, 1);
+      newTaskIds.splice(source.index, 1);
       newTaskIds.splice(destination.index, 0, draggableId);
         
       const newColumn = {
@@ -112,6 +124,11 @@ class App extends React.Component {
     this.setState(newState);
   };
 
+  pendingTask = (event) => {
+    //update the state with the changed text in the pending task box
+    this.setState({pendingTask: event.target.value});
+  }
+
   render() {
       return (
         <DragDropContext onDragEnd={this.onDragEnd}>
@@ -125,7 +142,8 @@ class App extends React.Component {
           </Container>
 
           <form onSubmit={this.addItem}>
-            <input placeholder="Task" />
+            <input placeholder="Task"
+            onChange={this.pendingTask}/>
             <button type="submit"> Add Task </button>
           </form>
         </DragDropContext>

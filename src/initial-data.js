@@ -25,6 +25,7 @@ const initialData = {
     },
     //Facilitate reording
     columnOrder: ['column-1','column-2','column-3'],
+    taskCount: 4,
 };
 
 export default initialData;
