@@ -358,3 +358,17 @@ This will allow the movement to be saved.
     this.setState(newState);
     };
     ```
+
+## Cloning git repository
+
+> git clone https://github.com/SG-mancer/tutorial_react-beautiful-dnd.git
+
+Remember to initialise the deployment with
+
+> yarn
+
+this will build the packages (otherwise you will get a [Yarn error 127](https://github.com/reactstrap/reactstrap/issues/711))
+
+> yarn start
+
+to start serving the page...

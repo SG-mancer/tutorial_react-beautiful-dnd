@@ -18,21 +18,30 @@ class App extends React.Component {
     // follow points from https://medium.com/js-geek/create-a-simple-todo-app-in-react-72d9341a7e6c to learn how to add items
 
     const newTasks = this.state.tasks;
-    console.log(newTasks)
-    //const newTask = {'task-5': {id: 'task-5', content: 'TEST'}};
-    //newTasks.splice(newTask, 1);
+    const newTask = {id: 'task-5', content: 'TEST'};
+    newTasks['task-5'] = newTask;
 
-    //console.log(newTasks)
+    const column = this.state.columns["column-1"];
+    const newTaskIds = Array.from(column.taskIds);
+    newTaskIds.splice(newTask.index, 0, 'task-5');
 
-
-
+    const newColumn = {
+      ...column,
+      taskIds: newTaskIds,
+    };
 
     const newState = {
       ...this.state,
       tasks: newTasks,
+      columns: {
+        ...this.state.columns,
+        "column-1": newColumn,
+      },
     };
+    
     this.setState(newState);
-
+    alert("error here - it seems to work until I click ok, then reverts back");
+    return;
   }
 
   //Moving Items
@@ -50,14 +59,13 @@ class App extends React.Component {
       return;
     }
 
-    
     const start = this.state.columns[source.droppableId];
     const finish = this.state.columns[destination.droppableId];
 
     if (start === finish) {
       const column = start;
       const newTaskIds = Array.from(column.taskIds);
-      newTaskIds.splice(source.index, 1);
+      //newTaskIds.splice(source.index, 1);
       newTaskIds.splice(destination.index, 0, draggableId);
         
       const newColumn = {
