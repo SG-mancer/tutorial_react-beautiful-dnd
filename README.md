@@ -4,6 +4,8 @@ This is a **react-beautiful-dnd** page started by following the tutorial at [htt
 
 Then to learn to add items I used [this tutorial from Krissanawat Kaewsanmuang](https://medium.com/js-geek/create-a-simple-todo-app-in-react-72d9341a7e6c).
 
+I then made a break through using [w3school react forms demo](https://www.w3schools.com/react/showreact.asp?filename=demo2_react_forms_submit) to understand how to edit/append the state.
+
 Probably need to check out [object constructors](https://www.w3schools.com/js/js_object_constructors.asp) or something next.
 
 
