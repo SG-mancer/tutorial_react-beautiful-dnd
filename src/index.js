@@ -97,6 +97,27 @@ class App extends React.Component {
       this.setState(newState);
       return;
     }
+
+    //Remove element from the table if dropped onto 4th column
+    if (finish.id === "column-4"){
+      const startTaskIds = Array.from(start.taskIds);
+      startTaskIds.splice(source.index, 1);
+      const newStart = {
+        ...start,
+        taskIds: startTaskIds,
+      };
+
+      const newState = {
+        ...this.state,
+        columns: {
+          ...this.state.columns,
+          [newStart.id]: newStart,
+        },
+      };
+
+      this.setState(newState);
+      return;
+    };    
   
     // Moving from one list to another
     const startTaskIds = Array.from(start.taskIds);
@@ -107,11 +128,11 @@ class App extends React.Component {
     };
 
     const finishTaskIds = Array.from(finish.taskIds);
-    finishTaskIds.splice(destination.index, 0, draggableId);
-    const newFinish = {
-      ...finish,
-      taskIds: finishTaskIds,
-    };
+      finishTaskIds.splice(destination.index, 0, draggableId);
+      const newFinish = {
+        ...finish,
+        taskIds: finishTaskIds,
+      };
 
     const newState = {
       ...this.state,
@@ -140,7 +161,7 @@ class App extends React.Component {
             return <Column key={column.id} column={column} tasks={tasks} />;
           })}
           </Container>
-
+          <column key="delete"/>
           <form onSubmit={this.addItem}>
             <input placeholder="Task"
             onChange={this.pendingTask}/>
