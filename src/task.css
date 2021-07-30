@@ -1,0 +1,14 @@
+body {
+    background-color: #282c34;
+    color: gray;
+    padding: 40px;
+    font-family: Arial;
+  }
+h3 {
+    color:green;
+}
+  
+#DELETE{
+    width: 100px;
+    background-color: #282c34;
+}

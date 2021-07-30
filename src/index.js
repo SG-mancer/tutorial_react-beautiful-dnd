@@ -5,6 +5,7 @@ import '@atlaskit/css-reset';
 import { DragDropContext } from 'react-beautiful-dnd';
 import initialData from './initial-data';
 import Column from './column';
+import './task.css';
 
 const Container = styled.div`
   display: flex;
@@ -158,10 +159,9 @@ class App extends React.Component {
             const column = this.state.columns[columnId];
             const tasks = column.taskIds.map(taskId => this.state.tasks[taskId]);
 
-            return <Column key={column.id} column={column} tasks={tasks} />;
+            return <Column key={column.id} column={column} tasks={tasks}/>;
           })}
           </Container>
-          <column key="delete"/>
           <form onSubmit={this.addItem}>
             <input placeholder="Task"
             onChange={this.pendingTask}/>
