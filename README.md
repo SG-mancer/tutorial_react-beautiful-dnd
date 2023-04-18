@@ -1,5 +1,7 @@
 ## `tutorial_react-beautiful-dnd`
 
+![Screenshot](Screenshot-2023.png "Screenshot of Kanban board created")
+
 This is a **react-beautiful-dnd** page started by following the tutorial at [https://egghead.io/](https://egghead.io/lessons/react-course-introduction-beautiful-and-accessible-drag-and-drop-with-react-beautiful-dnd)
 
 Then to learn to add items I used [this tutorial from Krissanawat Kaewsanmuang](https://medium.com/js-geek/create-a-simple-todo-app-in-react-72d9341a7e6c).
